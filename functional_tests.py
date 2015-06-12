@@ -16,7 +16,7 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    # Any function starting with test will be run
+    # Any function starting with test will be ru
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Annie is trying out a cool new online to-do list app.
         # She goes to the homepage:
