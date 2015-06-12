@@ -48,6 +48,7 @@ class NewVisitorTest(unittest.TestCase):
 
         # She quits the browser in satisfaction.
 
+        
     # this checks to see if this script is being run from the command line
     # (not another script.) So it will immediately run the testrunner
 if __name__ == '__main__':
