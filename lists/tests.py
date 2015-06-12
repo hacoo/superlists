@@ -1,6 +1,7 @@
 from django.test import TestCase # testcase is an augmented version of unittest.
 from django.core.urlresolvers import resolve
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from lists.views import home_page
 
@@ -18,7 +19,5 @@ class HomePageTest(TestCase):
         # Test if the HTML returned by the home_page view has some basic properties
         request = HttpRequest()
         response = home_page(request)
-        self.assertTrue(response.content.startswith(b'<html>'))
-        self.assertIn(b'<title> To-Do lists </title>', response.content)
-        self.assertTrue(response.content.endswith(b'</html>'))
-        
+        expected_html = render_to_string('home.html')
+        self.assertEqual(response.content.decode(), expected_html)
