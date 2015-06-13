@@ -17,6 +17,14 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows],
+                      str("\n ERROR: To-do item " + row_text + " did not appear in the table. It's text was:"
+                             + "\n " + table.text)
+        )
+        
     # Any function starting with test will be ru
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Annie is trying out a cool new online to-do list app.
@@ -44,34 +52,16 @@ class NewVisitorTest(unittest.TestCase):
         # the item she entered as so:
         # 1. "Buy peacock feathers"
         inputbox.send_keys(Keys.ENTER)
-
-        
-        
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(
-            '1: Buy peacock feathers', [row.text for row in rows],
-            "\n ERROR: New to-do item did not appear in table -- it's text was: \n%s" % (table.text)
-            )
-        
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
         
         # There is still a test box to add an item. She enteres
         # "Use peacock feathers to make a fly"
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
-
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(
-            '1: Buy peacock feathers', [row.text for row in rows],
-            "\n ERROR: To-Do item 1 did not appear in table -- it's text was: \n%s" % (table.text)
-            )
-        self.assertIn(
-            '2: Use peacock feathers to make fly', [row.text for row in rows],
-            "\n ERROR: To-Do item 2 did not appear in table -- it's text was: \n%s" % (table.text)
-            )
-
+        
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        self.check_for_row_in_list_table('2: Use peacock feathers to make fly')
 
         
 
