@@ -89,7 +89,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('make a fly', page_text)
 
         # Francis starts entering a new list. He's kind of boring.
-        inputbox = browser.find_element_by_id('id_new_item')
+        inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
 
