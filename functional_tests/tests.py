@@ -1,12 +1,14 @@
+
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
+#import unittest
 import time
 
 # A functional test story!
 # Adapted from Harry J.W. Percival "Test Driven Development with Python "
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     # setUp is always run at the beginning
     def setUp(self):
@@ -29,7 +31,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Annie is trying out a cool new online to-do list app.
         # She goes to the homepage:
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         
         # She notices the header and title mention to-do lists:
         self.assertIn('To-Do', self.browser.title)        
@@ -79,8 +81,8 @@ class NewVisitorTest(unittest.TestCase):
         
     # this checks to see if this script is being run from the command line
     # (not another script.) So it will immediately run the testrunner
-if __name__ == '__main__':
-    unittest.main()
+#if __name__ == '__main__':
+ #   unittest.main()
 
 
 
