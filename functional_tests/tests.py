@@ -29,7 +29,7 @@ class NewVisitorTest(LiveServerTestCase):
         
     # Any function starting with test will be ru
     def test_can_start_a_list_and_retrieve_it_later(self):
-        # Annie is trying out a cool new online to-do list app.
+        # Edith is trying out a cool new online to-do list app.
         # She goes to the homepage:
         self.browser.get(self.live_server_url)
         
@@ -54,6 +54,8 @@ class NewVisitorTest(LiveServerTestCase):
         # the item she entered as so:
         # 1. "Buy peacock feathers"
         inputbox.send_keys(Keys.ENTER)
+        edith_list_url = self.browser.current_url
+        self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         
         # There is still a test box to add an item. She enteres
@@ -69,14 +71,41 @@ class NewVisitorTest(LiveServerTestCase):
 
         # The page updates again, and now shows both items in the list
 
-        # Annie wonders if the page will remember her list. She
+        # Edith wonders if the page will remember her list. She
         # sees that the site has generated a unique URL for her.
         # There's some explanatory text.
 
         # She visits the URL - her todo list is still there!
 
         # She quits the browser in satisfaction.
+        self.browser.quit()
 
+        # A new user, Francis, goes to the site.
+        ## Frances starts a new browser
+        self.browser = webdriver.Firefox()
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('make a fly', page_text)
+
+        # Francis starts entering a new list. He's kind of boring.
+        inputbox = browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Buy milk')
+        inputbox.send_keys(Keys.ENTER)
+
+        # Francis gets his own URL.
+        francis_list_url = self.browser.current_url
+        self.assertRegex(francis_list_url,'/lists/.+')
+        self.assertNotEqual(francis_list_url, edith_list_url)
+
+        # Still no trace of Edith's list, but the new item is there
+        page_text = browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('make a fly', page_text)
+        self.assertIn('Buy milk', page_text)
+
+        # Fracis leaves in joy.
+        self.browser.quit()
         self.fail('test is not complete yet!') # Test will always fail (since it's not yet done)
         
     # this checks to see if this script is being run from the command line
