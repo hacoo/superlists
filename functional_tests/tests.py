@@ -105,7 +105,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
 
         # Fracis leaves in joy.
-        self.browser.quit()
+
         self.fail('test is not complete yet!') # Test will always fail (since it's not yet done)
         
     # this checks to see if this script is being run from the command line
