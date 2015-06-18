@@ -68,7 +68,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
 
         
-    def SUPPRESS_test_can_start_a_list_and_retrieve_it_later(self):
+    def test_can_start_a_list_and_retrieve_it_later(self):
         """ Run a basic functional test showing that a list can
         be created and retrieved. """
         # Edith is trying out a cool new online to-do list app.
@@ -148,7 +148,6 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         # Fracis leaves in joy.
 
-        self.fail('test is not complete yet!') # Test will always fail (since it's not yet done)
         
     # this checks to see if this script is being run from the command line
     # (not another script.) So it will immediately run the testrunner
