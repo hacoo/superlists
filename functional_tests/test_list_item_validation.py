@@ -8,21 +8,21 @@ class ItemValidationTest(FunctionalTest):
         # Edith accidentally enters a blank list item.
         # She hits enter on an empty list box:
         self.browser.get(self.server_url)
-        inputbox = self.browser.find_element_by_id('id_new_item')
         # The home page refreshes and given an error saying
         # that blank input is not valid.
-        inputbox.send_keys('\n')
+        
+        self.browser.find_element_by_id('id_new_item').send_keys('\n')
         error = self.browser.find_element_by_css_selector('.has-error')
         self.assertEqual(error.text, "You can't have an empty list item")
 
         # She tries again (with input).
-        inputbox.send_keys("Buy milk\n")
+        self.browser.find_element_by_id('id_new_item').send_keys("Buy milk\n")
         
         # It works.
         self.check_for_row_in_list_table("1: Buy milk")
 
         # Perversely, she then tries another blank line:
-        inputbox.send_keys('\n')
+        self.browser.find_element_by_id('id_new_item').send_keys('\n')
 
         # It still gives an error message.
         self.check_for_row_in_list_table("1: Buy milk")
@@ -30,7 +30,7 @@ class ItemValidationTest(FunctionalTest):
         self.assertEqual(error.text, "You can't have an empty list item")
         
         # She can correct it, add some text, which will be recorded:
-        inputbox.send_keys("Make tea\n")
+        self.browser.find_element_by_id('id_new_item').send_keys("Make tea\n")
         self.check_for_row_in_list_table("1: Buy milk")
         self.check_for_row_in_list_table("2: Make tea")
 
