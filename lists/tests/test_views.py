@@ -6,31 +6,22 @@ from django.utils.html import escape
 
 from lists.views import home_page
 from lists.models import Item, List
+from lists.forms import ItemForm
 
 
 # Create your tests here.
 
 class HomePageTest(TestCase):
+    maxDiff = None
+    
+    def test_home_page_renders_home_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
 
-    def test_root_url_resolves_to_home_page_view(self):
-        
-        found = resolve('/')
-        self.assertEquals(found.func, home_page)
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
-    def test_home_page_returns_correct_html(self):
-        # Test if the HTML returned by the home_page view has some basic properties
-        request = HttpRequest()
-        expected_html = render_to_string('home.html')
-        
-        response = home_page(request)
-
-        self.assertEqual(response.content.decode(), expected_html)
-
-
-    def test_home_page_only_saves_items_when_necessary(self):
-        request = HttpRequest()
-        home_page(request)
-        self.assertEqual(Item.objects.count(), 0)
         
         
 class ListViewTest(TestCase):
