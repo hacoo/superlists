@@ -54,12 +54,12 @@ class ListViewTest(TestCase):
 
         self.client.post(
             '/lists/%d/' % (correct_list.id),
-            data = {'item_text': 'A new item for existing list'}
+            data = {'text': 'A new item for existing list'}
         )
 
         self.client.post(
             '/lists/%d/' % (correct_list.id),
-            data = {'item_text': 'A second item for existing list'}
+            data = {'text': 'A second item for existing list'}
         )
 
 
@@ -78,7 +78,7 @@ class ListViewTest(TestCase):
 
         response = self.client.post(
             '/lists/%d/' % (correct_list.id),
-            data = {'item_text': 'A new item for existing list'}
+            data = {'text': 'A new item for existing list'}
         )
 
         self.assertRedirects(response, '/lists/%d/' % (correct_list.id))
@@ -87,7 +87,7 @@ class ListViewTest(TestCase):
         list_ = List.objects.create()
         response = self.client.post(
             '/lists/%d/' % (list_.id),
-            data = {'item_text': ''}
+            data = {'text': ''}
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'list.html')
@@ -99,7 +99,7 @@ class ListViewTest(TestCase):
 class NewListTest(TestCase):
 
     def test_validation_errors_are_sent_back_to_home_page_template(self):
-        response = self.client.post('/lists/new', data={'item_text': ''})
+        response = self.client.post('/lists/new', data={'text': ''})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'home.html')
         expected_error = escape("You can't have an empty list item")
