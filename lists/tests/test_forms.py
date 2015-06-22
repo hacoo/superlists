@@ -18,5 +18,7 @@ class ItemFormTest(TestCase):
             form.errors['text'],
             [EMPTY_LIST_ERROR]
             )
+
+    
                     
             
